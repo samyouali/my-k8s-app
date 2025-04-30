@@ -12,12 +12,12 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            docker build -t samy2/my-k8s-app:latest .
+            docker build -t dancegep/my-k8s-app:latest .
       - run:
           name: Push Docker Image
           command: |
             docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-            docker push samy2/my-k8s-app:latest
+            docker push dancegep/my-k8s-app:latest
   deploy:
     docker:
       - image: python:3.8
@@ -30,17 +30,19 @@ jobs:
             chmod +x ./kubectl
             mv ./kubectl /usr/local/bin/kubectl
       - run:
-          name: Configure kubectl
+          name: Set Kubernetes Context
           command: |
-            mkdir -p $HOME/.kube
-            echo "$KUBECONFIG_CONTENT" > $HOME/.kube/config
+            kubectl config set-cluster my-cluster --server=https://your-k8s-api-server:6443
+            kubectl config set-credentials my-user --token=$K8S_TOKEN
+            kubectl config set-context my-context --cluster=my-cluster --user=my-user
+            kubectl config use-context my-context
       - run:
           name: Deploy to Kubernetes
           command: |
-            kubectl set image deployment/my-k8s-deployment my-container=samy2/my-k8s-app:latest
+            kubectl set image deployment/my-k8s-deployment my-container=dancegep/my-k8s-app:latest
 workflows:
   version: 2
-  build-and-deploy:
+  build_and_deploy:
     jobs:
       - build
       - deploy:
