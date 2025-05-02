@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: my-k8s-deployment
-  namespace: dev
+  namespace: qa
   annotations:
       circleci.com/project-id: 545168a5-c1d1-4b79-ba0a-cce9766ab8d7
   labels:
@@ -23,6 +23,6 @@ spec:
     spec:
       containers:
       - name: my-container
-        image: dancegep/my-k8s-app:latest
+        image: my-k8s-app:qa
         ports:
         - containerPort: 3000
