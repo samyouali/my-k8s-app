@@ -22,8 +22,8 @@ spec:
         circleci.com/version: 1.0.0
     spec:
       containers:
-      - name: my-container
-        image: dancegep/my-k8s-app:dev
+      - name: my-k8s-app
+        image: my-k8s-app:dev
         imagePullPolicy: Always
         ports:
         - containerPort: 3000

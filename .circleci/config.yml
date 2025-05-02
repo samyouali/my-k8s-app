@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: node:14
+      - image: my-k8s-app:dev
     steps:
       - checkout
       - setup_remote_docker
